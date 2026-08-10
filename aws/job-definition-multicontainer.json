@@ -1,0 +1,72 @@
+{
+  "jobDefinitionName": "sast-semgrep-sonarqube",
+  "type": "container",
+  "platformCapabilities": ["FARGATE"],
+
+  "ecsProperties": {
+    "taskProperties": [
+      {
+        "executionRoleArn": "arn:aws:iam::REPLACE_ACCOUNT:role/sastBatchExecutionRole",
+        "taskRoleArn": "arn:aws:iam::REPLACE_ACCOUNT:role/sastBatchJobRole",
+        "runtimePlatform": { "operatingSystemFamily": "LINUX", "cpuArchitecture": "X86_64" },
+        "networkConfiguration": { "assignPublicIp": "ENABLED" },
+        "ephemeralStorage": { "sizeInGiB": 50 },
+
+        "containers": [
+          {
+            "name": "sonarqube",
+            "image": "public.ecr.aws/docker/library/sonarqube:25.5.0.107428-community",
+            "essential": false,
+            "resourceRequirements": [
+              { "type": "VCPU",   "value": "2" },
+              { "type": "MEMORY", "value": "8192" }
+            ],
+            "environment": [
+              { "name": "SONAR_SEARCH_JAVAADDITIONALOPTS", "value": "-Dnode.store.allow_mmap=false" },
+              { "name": "SONAR_ES_BOOTSTRAP_CHECKS_DISABLE", "value": "true" },
+              { "name": "SONAR_WEB_JAVAOPTS",    "value": "-Xms512m -Xmx2g" },
+              { "name": "SONAR_SEARCH_JAVAOPTS", "value": "-Xms512m -Xmx2g" }
+            ],
+            "logConfiguration": {
+              "logDriver": "awslogs",
+              "options": {
+                "awslogs-group": "/aws/batch/sast",
+                "awslogs-region": "REPLACE_REGION",
+                "awslogs-stream-prefix": "sonarqube"
+              }
+            }
+          },
+          {
+            "name": "scanner",
+            "image": "REPLACE_ACCOUNT.dkr.ecr.REPLACE_REGION.amazonaws.com/sast-batch-runner:REPLACE_TAG",
+            "essential": true,
+            "dependsOn": [ { "containerName": "sonarqube", "condition": "START" } ],
+            "resourceRequirements": [
+              { "type": "VCPU",   "value": "2" },
+              { "type": "MEMORY", "value": "8192" }
+            ],
+            "environment": [
+              { "name": "SONAR_HOST_URL",        "value": "http://localhost:9000" },
+              { "name": "SONAR_ADMIN_PASSWORD",  "value": "admin" },
+              { "name": "SONAR_STARTUP_TIMEOUT", "value": "600" },
+              { "name": "S3_BUCKET",             "value": "REPLACE_BUCKET" },
+              { "name": "SEMGREP_CONFIGS",       "value": "p/security-audit,p/owasp-top-ten,p/secrets" },
+              { "name": "FAIL_ON_SEVERITY",      "value": "none" }
+            ],
+            "logConfiguration": {
+              "logDriver": "awslogs",
+              "options": {
+                "awslogs-group": "/aws/batch/sast",
+                "awslogs-region": "REPLACE_REGION",
+                "awslogs-stream-prefix": "scanner"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+
+  "retryStrategy": { "attempts": 2 },
+  "timeout": { "attemptDurationSeconds": 3600 }
+}

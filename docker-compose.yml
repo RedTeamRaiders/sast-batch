@@ -1,0 +1,45 @@
+# docker-compose.yml — local parity test. Run this BEFORE you spend a minute on AWS.
+# The two services here map 1:1 onto the two containers in the AWS Batch multi-container
+# job definition, so if it works here it works on Fargate.
+services:
+
+  sonarqube:
+    # Pin the tag. "community" floats and will silently change your baseline.
+    image: sonarqube:25.5.0.107428-community
+    environment:
+      # THE Fargate-critical setting. SonarQube embeds Elasticsearch, which refuses to
+      # start unless the HOST kernel has vm.max_map_count >= 262144. vm.max_map_count is
+      # NOT a namespaced sysctl, so on Fargate you cannot set it at all. Disabling mmap
+      # storage removes the bootstrap check entirely. Without this line, SonarQube on
+      # Fargate dies in a crash loop and the error is buried in the ES log.
+      SONAR_SEARCH_JAVAADDITIONALOPTS: "-Dnode.store.allow_mmap=false"
+      # Belt and braces: skip the remaining ES production bootstrap checks.
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+      # Cap the JVM heaps so the two ES/web processes fit inside the Fargate memory
+      # allocation. Unbounded heaps + a hard container limit = OOMKilled with exit 137.
+      SONAR_WEB_JAVAOPTS: "-Xms512m -Xmx1500m"
+      SONAR_SEARCH_JAVAOPTS: "-Xms512m -Xmx1500m"
+      # No JDBC settings -> SonarQube falls back to the embedded H2 database, which the
+      # current docs explicitly sanction for CI/CD and trial use. Data dies with the
+      # container, which is exactly what you want for a per-job ephemeral scan.
+    ports:
+      - "9000:9000"
+
+  scanner:
+    build: .
+    depends_on:
+      - sonarqube
+    environment:
+      REPO_URL: "https://github.com/juice-shop/juice-shop.git"
+      REPO_BRANCH: "master"
+      # In compose, service DNS resolves by name. On Fargate both containers share one
+      # network namespace, so this becomes http://localhost:9000 — the ONE value that
+      # differs between local and AWS.
+      SONAR_HOST_URL: "http://sonarqube:9000"
+      SONAR_ADMIN_PASSWORD: "admin"
+      SONAR_PROJECT_KEY: "juice-shop"
+      SEMGREP_CONFIGS: "p/security-audit,p/owasp-top-ten,p/secrets"
+      FAIL_ON_SEVERITY: "none"
+    volumes:
+      # Bind /out to the host so you can open report.html straight from ./out.
+      - ./out:/out

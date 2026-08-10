@@ -1,0 +1,65 @@
+{
+  "repo_url": "RedTeamRaiders/juice-shop",
+  "branch": "default",
+  "commit": "220bde468bbc9ce0f4b2b243bb65f06b312ab473",
+  "job_id": "ee297571-7956-4e16-bda3-781390f5b4dc",
+  "project": "juice-shop",
+  "pr_number": "1",
+  "scanned_at": "2026-08-09T18:37:46+00:00",
+  "duration_sec": 271.8,
+  "sonar_host": "http://localhost:9000",
+  "total": 4891,
+  "severity_counts": {
+    "critical": 1,
+    "high": 3705,
+    "medium": 764,
+    "low": 373,
+    "info": 48
+  },
+  "findings_by_source": {
+    "sonarqube": 4847,
+    "semgrep": 44
+  },
+  "top_rules": [
+    {
+      "rule": "javascript:S3504",
+      "count": 2438
+    },
+    {
+      "rule": "typescript:S3735",
+      "count": 1101
+    },
+    {
+      "rule": "javascript:S2814",
+      "count": 219
+    },
+    {
+      "rule": "javascript:S2392",
+      "count": 155
+    },
+    {
+      "rule": "javascript:S1481",
+      "count": 154
+    },
+    {
+      "rule": "javascript:S3776",
+      "count": 73
+    },
+    {
+      "rule": "javascript:S125",
+      "count": 73
+    },
+    {
+      "rule": "javascript:S1854",
+      "count": 68
+    },
+    {
+      "rule": "typescript:S2004",
+      "count": 59
+    },
+    {
+      "rule": "typescript:S4325",
+      "count": 47
+    }
+  ]
+}

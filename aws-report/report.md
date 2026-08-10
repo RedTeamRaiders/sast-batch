@@ -1,0 +1,66 @@
+# SAST Report — juice-shop-juice-shop
+
+- **repo url**: `https://github.com/juice-shop/juice-shop.git`
+- **branch**: `master`
+- **commit**: `a520e158cb65c43d24e2c55d84f09b05a2511a03`
+- **job id**: `1c81283a-ac4d-4fb4-b9f4-fc2864f9ed4e`
+- **project**: `juice-shop-juice-shop`
+- **scanned at**: `2026-08-09T13:40:18+00:00`
+- **duration sec**: `182.3`
+
+## Severity summary
+
+| Severity | Count |
+|---|---:|
+| critical | 0 |
+| high | 0 |
+| medium | 40 |
+| low | 0 |
+| info | 0 |
+
+**Total: 40**
+
+## Findings
+
+| Sev | Rule | Location | Message |
+|---|---|---|---|
+| medium | `yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag` | `/workspace/src/.github/workflows/ci.yml:188` | GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — |
+| medium | `yaml.github-actions.security.gha-curl-pipe-shell.gha-curl-pipe-shell` | `/workspace/src/.github/workflows/ci.yml:358` | A `run:` step pipes the output of `curl` or `wget` directly into a shell interpreter. This is the "curl \| bash" install pattern — if the remote server is compr |
+| medium | `yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag` | `/workspace/src/.github/workflows/codeql-analysis.yml:23` | GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — |
+| medium | `yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag` | `/workspace/src/.github/workflows/codeql-analysis.yml:34` | GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — |
+| medium | `yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag` | `/workspace/src/.github/workflows/codeql-analysis.yml:36` | GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — |
+| medium | `yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag` | `/workspace/src/.github/workflows/image_actions.yml:30` | GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — |
+| medium | `yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag` | `/workspace/src/.github/workflows/image_actions.yml:33` | GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — |
+| medium | `yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag` | `/workspace/src/.github/workflows/image_actions.yml:42` | GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — |
+| medium | `yaml.github-actions.security.run-shell-injection.run-shell-injection` | `/workspace/src/.github/workflows/update-challenges-ebook.yml:22` | Using variable interpolation `${{...}}` with `github` context data in a `run:` step could allow an attacker to inject their own code into the runner. This would |
+| medium | `yaml.github-actions.security.run-shell-injection.run-shell-injection` | `/workspace/src/.github/workflows/update-challenges-www-legacy.yml:27` | Using variable interpolation `${{...}}` with `github` context data in a `run:` step could allow an attacker to inject their own code into the runner. This would |
+| medium | `yaml.github-actions.security.run-shell-injection.run-shell-injection` | `/workspace/src/.github/workflows/update-challenges-www-legacy.yml:36` | Using variable interpolation `${{...}}` with `github` context data in a `run:` step could allow an attacker to inject their own code into the runner. This would |
+| medium | `yaml.github-actions.security.run-shell-injection.run-shell-injection` | `/workspace/src/.github/workflows/update-challenges-www.yml:27` | Using variable interpolation `${{...}}` with `github` context data in a `run:` step could allow an attacker to inject their own code into the runner. This would |
+| medium | `yaml.github-actions.security.run-shell-injection.run-shell-injection` | `/workspace/src/.github/workflows/update-challenges-www.yml:36` | Using variable interpolation `${{...}}` with `github` context data in a `run:` step could allow an attacker to inject their own code into the runner. This would |
+| medium | `package_managers.npm.npm-missing-minimum-release-age.npm-missing-minimum-release-age` | `/workspace/src/.npmrc:1` | This .npmrc does not set a minimum release age or sets it too low. Newly published packages can be malicious or unstable. Add `min-release-age = 7` to wait 7 da |
+| medium | `javascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection` | `/workspace/src/data/static/codefixes/dbSchemaChallenge_1.ts:5` | Detected a sequelize statement that is tainted by user-input. This could lead to SQL injection if the variable is user-controlled and is not properly sanitized. |
+| medium | `javascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection` | `/workspace/src/data/static/codefixes/dbSchemaChallenge_3.ts:11` | Detected a sequelize statement that is tainted by user-input. This could lead to SQL injection if the variable is user-controlled and is not properly sanitized. |
+| medium | `javascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection` | `/workspace/src/data/static/codefixes/unionSqlInjectionChallenge_1.ts:6` | Detected a sequelize statement that is tainted by user-input. This could lead to SQL injection if the variable is user-controlled and is not properly sanitized. |
+| medium | `javascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection` | `/workspace/src/data/static/codefixes/unionSqlInjectionChallenge_3.ts:10` | Detected a sequelize statement that is tainted by user-input. This could lead to SQL injection if the variable is user-controlled and is not properly sanitized. |
+| medium | `package_managers.npm.npm-missing-minimum-release-age.npm-missing-minimum-release-age` | `/workspace/src/frontend/.npmrc:1` | This .npmrc does not set a minimum release age or sets it too low. Newly published packages can be malicious or unstable. Add `min-release-age = 7` to wait 7 da |
+| medium | `generic.html-templates.security.unquoted-attribute-var.unquoted-attribute-var` | `/workspace/src/frontend/src/app/navbar/navbar.component.html:17` | Detected a unquoted template variable as an attribute. If unquoted, a malicious actor could inject custom JavaScript handlers. To fix this, add quotes around th |
+| medium | `generic.html-templates.security.unquoted-attribute-var.unquoted-attribute-var` | `/workspace/src/frontend/src/app/purchase-basket/purchase-basket.component.html:15` | Detected a unquoted template variable as an attribute. If unquoted, a malicious actor could inject custom JavaScript handlers. To fix this, add quotes around th |
+| medium | `javascript.jsonwebtoken.security.jwt-hardcode.hardcoded-jwt-secret` | `/workspace/src/lib/insecurity.ts:54` | A hard-coded credential was detected. It is not recommended to store credentials in source-code, as this risks secrets being leaked and used by either an intern |
+| medium | `javascript.express.security.audit.express-res-sendfile.express-res-sendfile` | `/workspace/src/routes/fileServer.ts:33` | The application processes user-input, this is passed to res.sendFile which can allow an attacker to arbitrarily read files on the system through path traversal. |
+| medium | `javascript.express.security.audit.express-res-sendfile.express-res-sendfile` | `/workspace/src/routes/keyServer.ts:14` | The application processes user-input, this is passed to res.sendFile which can allow an attacker to arbitrarily read files on the system through path traversal. |
+| medium | `javascript.express.security.audit.express-res-sendfile.express-res-sendfile` | `/workspace/src/routes/logfileServer.ts:14` | The application processes user-input, this is passed to res.sendFile which can allow an attacker to arbitrarily read files on the system through path traversal. |
+| medium | `javascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection` | `/workspace/src/routes/login.ts:34` | Detected a sequelize statement that is tainted by user-input. This could lead to SQL injection if the variable is user-controlled and is not properly sanitized. |
+| medium | `javascript.express.security.audit.express-res-sendfile.express-res-sendfile` | `/workspace/src/routes/quarantineServer.ts:14` | The application processes user-input, this is passed to res.sendFile which can allow an attacker to arbitrarily read files on the system through path traversal. |
+| medium | `javascript.express.security.audit.possible-user-input-redirect.unknown-value-in-redirect` | `/workspace/src/routes/redirect.ts:19` | It looks like 'toUrl' is read from user input and it is used to as a redirect. Ensure 'toUrl' is not externally controlled, otherwise this is an open redirect. |
+| medium | `javascript.express.security.audit.express-open-redirect.express-open-redirect` | `/workspace/src/routes/redirect.ts:19` | The application redirects to a URL specified by user-supplied input `query` that is not validated. This could redirect users to malicious locations. Consider us |
+| medium | `javascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection` | `/workspace/src/routes/search.ts:23` | Detected a sequelize statement that is tainted by user-input. This could lead to SQL injection if the variable is user-controlled and is not properly sanitized. |
+| medium | `javascript.lang.security.audit.code-string-concat.code-string-concat` | `/workspace/src/routes/userProfile.ts:61` | Found data from an Express or Next web request flowing to `eval`. If this data is user-controllable this can lead to execution of arbitrary system commands in t |
+| medium | `javascript.lang.security.audit.unknown-value-with-script-tag.unknown-value-with-script-tag` | `/workspace/src/routes/videoHandler.ts:57` | Cannot determine what 'subs' is and it is used with a '<script>' tag. This could be susceptible to cross-site scripting (XSS). Ensure 'subs' is not externally c |
+| medium | `javascript.lang.security.audit.unknown-value-with-script-tag.unknown-value-with-script-tag` | `/workspace/src/routes/videoHandler.ts:71` | Cannot determine what 'subs' is and it is used with a '<script>' tag. This could be susceptible to cross-site scripting (XSS). Ensure 'subs' is not externally c |
+| medium | `javascript.express.security.audit.express-check-directory-listing.express-check-directory-listing` | `/workspace/src/server.ts:269` | Directory listing/indexing is enabled, which may lead to disclosure of sensitive directories and files. It is recommended to disable directory listing unless it |
+| medium | `javascript.express.security.audit.express-check-directory-listing.express-check-directory-listing` | `/workspace/src/server.ts:273` | Directory listing/indexing is enabled, which may lead to disclosure of sensitive directories and files. It is recommended to disable directory listing unless it |
+| medium | `javascript.express.security.audit.express-check-directory-listing.express-check-directory-listing` | `/workspace/src/server.ts:277` | Directory listing/indexing is enabled, which may lead to disclosure of sensitive directories and files. It is recommended to disable directory listing unless it |
+| medium | `javascript.express.security.audit.express-check-directory-listing.express-check-directory-listing` | `/workspace/src/server.ts:281` | Directory listing/indexing is enabled, which may lead to disclosure of sensitive directories and files. It is recommended to disable directory listing unless it |
+| medium | `javascript.jsonwebtoken.security.jwt-hardcode.hardcoded-jwt-secret` | `/workspace/src/test/api/2fa.test.ts:83` | A hard-coded credential was detected. It is not recommended to store credentials in source-code, as this risks secrets being leaked and used by either an intern |
+| medium | `dockerfile.security.missing-user.missing-user` | `/workspace/src/test/smoke/Dockerfile:7` | By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they ma |
+| medium | `generic.html-templates.security.unquoted-attribute-var.unquoted-attribute-var` | `/workspace/src/views/dataErasureForm.hbs:38` | Detected a unquoted template variable as an attribute. If unquoted, a malicious actor could inject custom JavaScript handlers. To fix this, add quotes around th |

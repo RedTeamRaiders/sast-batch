@@ -1,0 +1,10 @@
+# Semgrep OSS engine + CLI. Pin it: rule engine behaviour changes between minors,
+# and an unpinned scanner means your "no new findings" gate is not reproducible.
+setuptools==70.3.0
+semgrep==1.90.0
+
+# AWS SDK — used for S3 upload of reports and Secrets Manager retrieval of the git token.
+boto3==1.35.36
+
+# HTTP client for the SonarQube Web API (CE task polling, issue + hotspot pull).
+requests==2.32.3

@@ -1,0 +1,63 @@
+{
+  "repo_url": "https://github.com/juice-shop/juice-shop.git",
+  "branch": "master",
+  "commit": "a520e158cb65c43d24e2c55d84f09b05a2511a03",
+  "job_id": "1c81283a-ac4d-4fb4-b9f4-fc2864f9ed4e",
+  "project": "juice-shop-juice-shop",
+  "scanned_at": "2026-08-09T13:40:18+00:00",
+  "duration_sec": 182.3,
+  "sonar_host": null,
+  "total": 40,
+  "severity_counts": {
+    "critical": 0,
+    "high": 0,
+    "medium": 40,
+    "low": 0,
+    "info": 0
+  },
+  "findings_by_source": {
+    "semgrep": 40
+  },
+  "top_rules": [
+    {
+      "rule": "yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag",
+      "count": 7
+    },
+    {
+      "rule": "javascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection",
+      "count": 6
+    },
+    {
+      "rule": "yaml.github-actions.security.run-shell-injection.run-shell-injection",
+      "count": 5
+    },
+    {
+      "rule": "javascript.express.security.audit.express-res-sendfile.express-res-sendfile",
+      "count": 4
+    },
+    {
+      "rule": "javascript.express.security.audit.express-check-directory-listing.express-check-directory-listing",
+      "count": 4
+    },
+    {
+      "rule": "generic.html-templates.security.unquoted-attribute-var.unquoted-attribute-var",
+      "count": 3
+    },
+    {
+      "rule": "package_managers.npm.npm-missing-minimum-release-age.npm-missing-minimum-release-age",
+      "count": 2
+    },
+    {
+      "rule": "javascript.jsonwebtoken.security.jwt-hardcode.hardcoded-jwt-secret",
+      "count": 2
+    },
+    {
+      "rule": "javascript.lang.security.audit.unknown-value-with-script-tag.unknown-value-with-script-tag",
+      "count": 2
+    },
+    {
+      "rule": "yaml.github-actions.security.gha-curl-pipe-shell.gha-curl-pipe-shell",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "jobDefinitionName": "sast-semgrep-only",
+  "type": "container",
+  "platformCapabilities": ["FARGATE"],
+  "containerProperties": {
+    "image": "485237569462.dkr.ecr.us-east-1.amazonaws.com/sast-batch-runner:20260809081904",
+    "executionRoleArn": "arn:aws:iam::485237569462:role/sastBatchExecutionRole",
+    "jobRoleArn": "arn:aws:iam::485237569462:role/sastBatchJobRole",
+    "resourceRequirements": [
+      { "type": "VCPU", "value": "2" },
+      { "type": "MEMORY", "value": "4096" }
+    ],
+    "fargatePlatformConfiguration": { "platformVersion": "LATEST" },
+    "runtimePlatform": { "operatingSystemFamily": "LINUX", "cpuArchitecture": "X86_64" },
+    "ephemeralStorage": { "sizeInGiB": 40 },
+    "networkConfiguration": { "assignPublicIp": "ENABLED" },
+    "environment": [
+      { "name": "S3_BUCKET", "value": "sast-reports-485237569462" },
+      { "name": "SEMGREP_CONFIGS", "value": "p/security-audit,p/owasp-top-ten,p/secrets" },
+      { "name": "FAIL_ON_SEVERITY", "value": "none" }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "/aws/batch/sast",
+        "awslogs-region": "us-east-1",
+        "awslogs-stream-prefix": "semgrep"
+      }
+    }
+  },
+  "retryStrategy": { "attempts": 2 },
+  "timeout": { "attemptDurationSeconds": 2700 }
+}

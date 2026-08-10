@@ -1,0 +1,283 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAST Report · juice-shop-juice-shop</title><style>
+:root{
+  --bg:#101319; --panel:#171c25; --line:#242c38; --ink:#dde3ec; --dim:#7d8798;
+  --critical:#ff5f56; --high:#ff9a3c; --medium:#e8c547; --low:#5aa9e6; --info:#6b7688;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:14px/1.55 ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 20px 80px}
+h1{font-size:26px;letter-spacing:-.02em;margin:0 0 4px;font-weight:600}
+h1 span{color:var(--dim);font-weight:400}
+h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);
+  margin:40px 0 12px;font-weight:600}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:1px;background:var(--line);border:1px solid var(--line);margin-top:24px}
+.meta div{background:var(--panel);padding:11px 13px}
+.meta dt{color:var(--dim);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.meta dd{margin:3px 0 0;word-break:break-all}
+/* Severity spine: proportional stacked bar that doubles as the legend. */
+.spine{display:flex;height:34px;border:1px solid var(--line);overflow:hidden;margin-bottom:10px}
+.spine i{display:block}
+.legend{display:flex;flex-wrap:wrap;gap:18px;color:var(--dim);font-size:12px}
+.legend b{color:var(--ink)}
+.dot{display:inline-block;width:9px;height:9px;margin-right:6px}
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+th{text-align:left;color:var(--dim);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:hover td{background:var(--panel)}
+.sev{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+  white-space:nowrap;border-left:3px solid;padding-left:8px}
+.rule{color:var(--dim);font-size:12px;word-break:break-all}
+.loc{color:var(--low);font-size:12px;word-break:break-all}
+pre{margin:6px 0 0;padding:8px 10px;background:#0b0e13;border:1px solid var(--line);
+  overflow-x:auto;font-size:12px;color:#aab4c4;white-space:pre-wrap}
+.empty{padding:34px;border:1px dashed var(--line);color:var(--dim);text-align:center}
+footer{margin-top:56px;color:var(--dim);font-size:12px;border-top:1px solid var(--line);padding-top:16px}
+</style>
+</head><body><div class="wrap">
+<h1>SAST Report <span>/ juice-shop-juice-shop</span></h1>
+<dl class="meta"><div><dt>repo url</dt><dd>https://github.com/juice-shop/juice-shop.git</dd></div><div><dt>branch</dt><dd>master</dd></div><div><dt>commit</dt><dd>a520e158cb65c43d24e2c55d84f09b05a2511a03</dd></div><div><dt>job id</dt><dd>1c81283a-ac4d-4fb4-b9f4-fc2864f9ed4e</dd></div><div><dt>project</dt><dd>juice-shop-juice-shop</dd></div><div><dt>scanned at</dt><dd>2026-08-09T13:40:18+00:00</dd></div><div><dt>duration sec</dt><dd>182.3</dd></div></dl>
+<h2>Severity distribution</h2>
+<div class="spine"><i style="width:100.00%;background:var(--medium)" title="medium: 40"></i></div>
+<div class="legend"><span><span class="dot" style="background:var(--critical)"></span>critical <b>0</b></span><span><span class="dot" style="background:var(--high)"></span>high <b>0</b></span><span><span class="dot" style="background:var(--medium)"></span>medium <b>40</b></span><span><span class="dot" style="background:var(--low)"></span>low <b>0</b></span><span><span class="dot" style="background:var(--info)"></span>info <b>0</b></span></div>
+<h2>Findings (40)</h2>
+<table><tr><th>Severity</th><th>Finding</th><th>Location</th></tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`.<pre>uses: coverallsapp/github-action@v2</pre>
+      <div class="rule">yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag · CWE-1357: Reliance on Insufficiently Trustworthy Component, CWE-353: Missing Support for Integrity Check · semgrep</div></td>
+  <td class="loc">/workspace/src/.github/workflows/ci.yml:188</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>A `run:` step pipes the output of `curl` or `wget` directly into a shell interpreter. This is the &quot;curl | bash&quot; install pattern — if the remote server is compromised or the URL is hijacked, an attacker can execute arbitrary code in your CI runner. Consider downloading the file first, verifying its checksum or signature, and then executing it.<pre>run: curl https://cli-assets.heroku.com/install.sh | sh</pre>
+      <div class="rule">yaml.github-actions.security.gha-curl-pipe-shell.gha-curl-pipe-shell · CWE-78: Improper Neutralization of Special Elements used in an OS Command (&#x27;OS Command Injection&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/.github/workflows/ci.yml:358</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`.<pre>uses: github/codeql-action/init@v3</pre>
+      <div class="rule">yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag · CWE-1357: Reliance on Insufficiently Trustworthy Component, CWE-353: Missing Support for Integrity Check · semgrep</div></td>
+  <td class="loc">/workspace/src/.github/workflows/codeql-analysis.yml:23</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`.<pre>uses: github/codeql-action/autobuild@v3</pre>
+      <div class="rule">yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag · CWE-1357: Reliance on Insufficiently Trustworthy Component, CWE-353: Missing Support for Integrity Check · semgrep</div></td>
+  <td class="loc">/workspace/src/.github/workflows/codeql-analysis.yml:34</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`.<pre>uses: github/codeql-action/analyze@v3</pre>
+      <div class="rule">yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag · CWE-1357: Reliance on Insufficiently Trustworthy Component, CWE-353: Missing Support for Integrity Check · semgrep</div></td>
+  <td class="loc">/workspace/src/.github/workflows/codeql-analysis.yml:36</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`.<pre>uses: actions/checkout@v6</pre>
+      <div class="rule">yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag · CWE-1357: Reliance on Insufficiently Trustworthy Component, CWE-353: Missing Support for Integrity Check · semgrep</div></td>
+  <td class="loc">/workspace/src/.github/workflows/image_actions.yml:30</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`.<pre>uses: calibreapp/image-actions@main</pre>
+      <div class="rule">yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag · CWE-1357: Reliance on Insufficiently Trustworthy Component, CWE-353: Missing Support for Integrity Check · semgrep</div></td>
+  <td class="loc">/workspace/src/.github/workflows/image_actions.yml:33</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>GitHub Actions step uses a mutable tag or branch reference. Tags and branch names can be silently repointed by the action owner, enabling supply-chain attacks — as seen in the trivy-action and kics-github-action compromises. Pin the reference to a full 40-character commit SHA instead, e.g. `uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608`.<pre>uses: peter-evans/create-pull-request@v8</pre>
+      <div class="rule">yaml.github-actions.security.github-actions-mutable-action-tag.github-actions-mutable-action-tag · CWE-1357: Reliance on Insufficiently Trustworthy Component, CWE-353: Missing Support for Integrity Check · semgrep</div></td>
+  <td class="loc">/workspace/src/.github/workflows/image_actions.yml:42</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Using variable interpolation `${{...}}` with `github` context data in a `run:` step could allow an attacker to inject their own code into the runner. This would allow them to steal secrets and code. `github` context data can have arbitrary user input and should be treated as untrusted. Instead, use an intermediate environment variable with `env:` to store the data and use the environment variable in the `run:` script. Be sure to use double-quotes the environment variable, like this: &quot;$ENVVAR&quot;.<pre>run: |
+        cd docs/modules/ROOT/assets/data
+        rm challenges.yml
+        wget https://raw.githubusercontent.com/juice-shop/juice-shop/${{ github.ref_name }}/data/static/challenges.yml</pre>
+      <div class="rule">yaml.github-actions.security.run-shell-injection.run-shell-injection · CWE-78: Improper Neutralization of Special Elements used in an OS Command (&#x27;OS Command Injection&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/.github/workflows/update-challenges-ebook.yml:22</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Using variable interpolation `${{...}}` with `github` context data in a `run:` step could allow an attacker to inject their own code into the runner. This would allow them to steal secrets and code. `github` context data can have arbitrary user input and should be treated as untrusted. Instead, use an intermediate environment variable with `env:` to store the data and use the environment variable in the `run:` script. Be sure to use double-quotes the environment variable, like this: &quot;$ENVVAR&quot;.<pre>run: |
+        if [ &quot;${{ github.ref_name }}&quot; = &quot;master&quot; ]; then
+          DEST_FILE=&quot;_data/challenges.yml&quot;
+        else
+          DEST_FILE=&quot;_data/challenges_dev.yml&quot;
+        fi
+        rm -f $DEST_FILE
+        cp juice-shop/data/static/challenges.yml $DEST_FILE</pre>
+      <div class="rule">yaml.github-actions.security.run-shell-injection.run-shell-injection · CWE-78: Improper Neutralization of Special Elements used in an OS Command (&#x27;OS Command Injection&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/.github/workflows/update-challenges-www-legacy.yml:27</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Using variable interpolation `${{...}}` with `github` context data in a `run:` step could allow an attacker to inject their own code into the runner. This would allow them to steal secrets and code. `github` context data can have arbitrary user input and should be treated as untrusted. Instead, use an intermediate environment variable with `env:` to store the data and use the environment variable in the `run:` script. Be sure to use double-quotes the environment variable, like this: &quot;$ENVVAR&quot;.<pre>run: |
+        if [ &quot;${{ github.ref_name }}&quot; = &quot;master&quot; ]; then
+          DEST_FILE=&quot;_data/snippets.json&quot;
+        else
+          DEST_FILE=&quot;_data/snippets_dev.json&quot;
+        fi
+        rm -f $DEST_FILE
+        CHALLENGES=$(ls juice-shop/data/static/codefixes/*.info.yml | xargs -n 1 basename | sed &#x27;s/\.info\.yml//&#x27; | jq -R . | jq -s -c &#x27;{&quot;challenges&quot;: .}&#x27;)
+        echo $CHALLENGES &gt; $DEST_FILE</pre>
+      <div class="rule">yaml.github-actions.security.run-shell-injection.run-shell-injection · CWE-78: Improper Neutralization of Special Elements used in an OS Command (&#x27;OS Command Injection&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/.github/workflows/update-challenges-www-legacy.yml:36</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Using variable interpolation `${{...}}` with `github` context data in a `run:` step could allow an attacker to inject their own code into the runner. This would allow them to steal secrets and code. `github` context data can have arbitrary user input and should be treated as untrusted. Instead, use an intermediate environment variable with `env:` to store the data and use the environment variable in the `run:` script. Be sure to use double-quotes the environment variable, like this: &quot;$ENVVAR&quot;.<pre>run: |
+        if [ &quot;${{ github.ref_name }}&quot; = &quot;master&quot; ]; then
+          DEST_FILE=&quot;_data/challenges.yml&quot;
+        else
+          DEST_FILE=&quot;_data/challenges_dev.yml&quot;
+        fi
+        rm -f $DEST_FILE
+        cp juice-shop/data/static/challenges.yml $DEST_FILE</pre>
+      <div class="rule">yaml.github-actions.security.run-shell-injection.run-shell-injection · CWE-78: Improper Neutralization of Special Elements used in an OS Command (&#x27;OS Command Injection&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/.github/workflows/update-challenges-www.yml:27</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Using variable interpolation `${{...}}` with `github` context data in a `run:` step could allow an attacker to inject their own code into the runner. This would allow them to steal secrets and code. `github` context data can have arbitrary user input and should be treated as untrusted. Instead, use an intermediate environment variable with `env:` to store the data and use the environment variable in the `run:` script. Be sure to use double-quotes the environment variable, like this: &quot;$ENVVAR&quot;.<pre>run: |
+        if [ &quot;${{ github.ref_name }}&quot; = &quot;master&quot; ]; then
+          DEST_FILE=&quot;_data/snippets.json&quot;
+        else
+          DEST_FILE=&quot;_data/snippets_dev.json&quot;
+        fi
+        rm -f $DEST_FILE
+        CHALLENGES=$(ls juice-shop/data/static/codefixes/*.info.yml | xargs -n 1 basename | sed &#x27;s/\.info\.yml//&#x27; | jq -R . | jq -s -c &#x27;{&quot;challenges&quot;: .}&#x27;)
+        echo $CHALLENGES &gt; $DEST_FILE</pre>
+      <div class="rule">yaml.github-actions.security.run-shell-injection.run-shell-injection · CWE-78: Improper Neutralization of Special Elements used in an OS Command (&#x27;OS Command Injection&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/.github/workflows/update-challenges-www.yml:36</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>This .npmrc does not set a minimum release age or sets it too low. Newly published packages can be malicious or unstable. Add `min-release-age = 7` to wait 7 days before resolving newly published package versions. Added in: v11.10 Reference: https://github.blog/changelog/2026-02-18-npm-bulk-trusted-publishing-config-and-script-security-now-generally-available/<pre>package-lock=false</pre>
+      <div class="rule">package_managers.npm.npm-missing-minimum-release-age.npm-missing-minimum-release-age · CWE-829: Inclusion of Functionality from Untrusted Control Sphere · semgrep</div></td>
+  <td class="loc">/workspace/src/.npmrc:1</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Detected a sequelize statement that is tainted by user-input. This could lead to SQL injection if the variable is user-controlled and is not properly sanitized. In order to prevent SQL injection, it is recommended to use parameterized queries or prepared statements.<pre>models.sequelize.query(&quot;SELECT * FROM Products WHERE ((name LIKE &#x27;%&quot;+criteria+&quot;%&#x27; OR description LIKE &#x27;%&quot;+criteria+&quot;%&#x27;) AND deletedAt IS NULL) ORDER BY name&quot;)</pre>
+      <div class="rule">javascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection · CWE-89: Improper Neutralization of Special Elements used in an SQL Command (&#x27;SQL Injection&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/data/static/codefixes/dbSchemaChallenge_1.ts:5</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Detected a sequelize statement that is tainted by user-input. This could lead to SQL injection if the variable is user-controlled and is not properly sanitized. In order to prevent SQL injection, it is recommended to use parameterized queries or prepared statements.<pre>models.sequelize.query(`SELECT * FROM Products WHERE ((name LIKE &#x27;%${criteria}%&#x27; OR description LIKE &#x27;%${criteria}%&#x27;) AND deletedAt IS NULL) ORDER BY name`)</pre>
+      <div class="rule">javascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection · CWE-89: Improper Neutralization of Special Elements used in an SQL Command (&#x27;SQL Injection&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/data/static/codefixes/dbSchemaChallenge_3.ts:11</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Detected a sequelize statement that is tainted by user-input. This could lead to SQL injection if the variable is user-controlled and is not properly sanitized. In order to prevent SQL injection, it is recommended to use parameterized queries or prepared statements.<pre>models.sequelize.query(`SELECT * FROM Products WHERE ((name LIKE &#x27;%${criteria}%&#x27; OR description LIKE &#x27;%${criteria}%&#x27;) AND deletedAt IS NULL) ORDER BY name`)</pre>
+      <div class="rule">javascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection · CWE-89: Improper Neutralization of Special Elements used in an SQL Command (&#x27;SQL Injection&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/data/static/codefixes/unionSqlInjectionChallenge_1.ts:6</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Detected a sequelize statement that is tainted by user-input. This could lead to SQL injection if the variable is user-controlled and is not properly sanitized. In order to prevent SQL injection, it is recommended to use parameterized queries or prepared statements.<pre>models.sequelize.query(`SELECT * FROM Products WHERE ((name LIKE &#x27;%${criteria}%&#x27; OR description LIKE &#x27;%${criteria}%&#x27;) AND deletedAt IS NULL) ORDER BY name`)</pre>
+      <div class="rule">javascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection · CWE-89: Improper Neutralization of Special Elements used in an SQL Command (&#x27;SQL Injection&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/data/static/codefixes/unionSqlInjectionChallenge_3.ts:10</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>This .npmrc does not set a minimum release age or sets it too low. Newly published packages can be malicious or unstable. Add `min-release-age = 7` to wait 7 days before resolving newly published package versions. Added in: v11.10 Reference: https://github.blog/changelog/2026-02-18-npm-bulk-trusted-publishing-config-and-script-security-now-generally-available/<pre>package-lock=false</pre>
+      <div class="rule">package_managers.npm.npm-missing-minimum-release-age.npm-missing-minimum-release-age · CWE-829: Inclusion of Functionality from Untrusted Control Sphere · semgrep</div></td>
+  <td class="loc">/workspace/src/frontend/.npmrc:1</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Detected a unquoted template variable as an attribute. If unquoted, a malicious actor could inject custom JavaScript handlers. To fix this, add quotes around the template expression, like this: &quot;{{ expr }}&quot;.<pre>&lt;img [src]=&quot;logoSrc&quot; class=&quot;logo&quot; alt={{applicationName}}&gt;</pre>
+      <div class="rule">generic.html-templates.security.unquoted-attribute-var.unquoted-attribute-var · CWE-79: Improper Neutralization of Input During Web Page Generation (&#x27;Cross-site Scripting&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/frontend/src/app/navbar/navbar.component.html:17</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Detected a unquoted template variable as an attribute. If unquoted, a malicious actor could inject custom JavaScript handlers. To fix this, add quotes around the template expression, like this: &quot;{{ expr }}&quot;.<pre>&lt;img [src]=&quot;&#x27;assets/public/images/products/&#x27;+element.image&quot; alt={{element.name}}</pre>
+      <div class="rule">generic.html-templates.security.unquoted-attribute-var.unquoted-attribute-var · CWE-79: Improper Neutralization of Input During Web Page Generation (&#x27;Cross-site Scripting&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/frontend/src/app/purchase-basket/purchase-basket.component.html:15</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>A hard-coded credential was detected. It is not recommended to store credentials in source-code, as this risks secrets being leaked and used by either an internal or external malicious adversary. It is recommended to use environment variables to securely provide credentials or retrieve credentials from a secure vault or HSM (Hardware Security Module).<pre>export const authorize = (user = {}) =&gt; jwt.sign(user, privateKey, { expiresIn: &#x27;6h&#x27;, algorithm: &#x27;RS256&#x27; })</pre>
+      <div class="rule">javascript.jsonwebtoken.security.jwt-hardcode.hardcoded-jwt-secret · CWE-798: Use of Hard-coded Credentials · semgrep</div></td>
+  <td class="loc">/workspace/src/lib/insecurity.ts:54</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>The application processes user-input, this is passed to res.sendFile which can allow an attacker to arbitrarily read files on the system through path traversal. It is recommended to perform input validation in addition to canonicalizing the path. This allows you to validate the path against the intended directory it should be accessing.<pre>res.sendFile(path.resolve(&#x27;ftp/&#x27;, file))</pre>
+      <div class="rule">javascript.express.security.audit.express-res-sendfile.express-res-sendfile · CWE-73: External Control of File Name or Path · semgrep</div></td>
+  <td class="loc">/workspace/src/routes/fileServer.ts:33</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>The application processes user-input, this is passed to res.sendFile which can allow an attacker to arbitrarily read files on the system through path traversal. It is recommended to perform input validation in addition to canonicalizing the path. This allows you to validate the path against the intended directory it should be accessing.<pre>res.sendFile(path.resolve(&#x27;encryptionkeys/&#x27;, file))</pre>
+      <div class="rule">javascript.express.security.audit.express-res-sendfile.express-res-sendfile · CWE-73: External Control of File Name or Path · semgrep</div></td>
+  <td class="loc">/workspace/src/routes/keyServer.ts:14</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>The application processes user-input, this is passed to res.sendFile which can allow an attacker to arbitrarily read files on the system through path traversal. It is recommended to perform input validation in addition to canonicalizing the path. This allows you to validate the path against the intended directory it should be accessing.<pre>res.sendFile(path.resolve(&#x27;logs/&#x27;, file))</pre>
+      <div class="rule">javascript.express.security.audit.express-res-sendfile.express-res-sendfile · CWE-73: External Control of File Name or Path · semgrep</div></td>
+  <td class="loc">/workspace/src/routes/logfileServer.ts:14</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Detected a sequelize statement that is tainted by user-input. This could lead to SQL injection if the variable is user-controlled and is not properly sanitized. In order to prevent SQL injection, it is recommended to use parameterized queries or prepared statements.<pre>models.sequelize.query(`SELECT * FROM Users WHERE email = &#x27;${req.body.email || &#x27;&#x27;}&#x27; AND password = &#x27;${security.hash(req.body.password || &#x27;&#x27;)}&#x27; AND deletedAt IS NULL`, { model: UserModel, plain: true }) // vuln-code-snippet vuln-line loginAdminChallenge loginBenderChallenge loginJimChallenge</pre>
+      <div class="rule">javascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection · CWE-89: Improper Neutralization of Special Elements used in an SQL Command (&#x27;SQL Injection&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/routes/login.ts:34</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>The application processes user-input, this is passed to res.sendFile which can allow an attacker to arbitrarily read files on the system through path traversal. It is recommended to perform input validation in addition to canonicalizing the path. This allows you to validate the path against the intended directory it should be accessing.<pre>res.sendFile(path.resolve(&#x27;ftp/quarantine/&#x27;, file))</pre>
+      <div class="rule">javascript.express.security.audit.express-res-sendfile.express-res-sendfile · CWE-73: External Control of File Name or Path · semgrep</div></td>
+  <td class="loc">/workspace/src/routes/quarantineServer.ts:14</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>It looks like &#x27;toUrl&#x27; is read from user input and it is used to as a redirect. Ensure &#x27;toUrl&#x27; is not externally controlled, otherwise this is an open redirect.<pre>res.redirect(toUrl)</pre>
+      <div class="rule">javascript.express.security.audit.possible-user-input-redirect.unknown-value-in-redirect · CWE-601: URL Redirection to Untrusted Site (&#x27;Open Redirect&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/routes/redirect.ts:19</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>The application redirects to a URL specified by user-supplied input `query` that is not validated. This could redirect users to malicious locations. Consider using an allow-list approach to validate URLs, or warn users they are being redirected to a third-party website.<pre>res.redirect(toUrl)</pre>
+      <div class="rule">javascript.express.security.audit.express-open-redirect.express-open-redirect · CWE-601: URL Redirection to Untrusted Site (&#x27;Open Redirect&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/routes/redirect.ts:19</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Detected a sequelize statement that is tainted by user-input. This could lead to SQL injection if the variable is user-controlled and is not properly sanitized. In order to prevent SQL injection, it is recommended to use parameterized queries or prepared statements.<pre>models.sequelize.query(`SELECT * FROM Products WHERE ((name LIKE &#x27;%${criteria}%&#x27; OR description LIKE &#x27;%${criteria}%&#x27;) AND deletedAt IS NULL) ORDER BY name`) // vuln-code-snippet vuln-line unionSqlInjectionChallenge dbSchemaChallenge</pre>
+      <div class="rule">javascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection · CWE-89: Improper Neutralization of Special Elements used in an SQL Command (&#x27;SQL Injection&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/routes/search.ts:23</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Found data from an Express or Next web request flowing to `eval`. If this data is user-controllable this can lead to execution of arbitrary system commands in the context of your application process. Avoid `eval` whenever possible.<pre>username = eval(code) // eslint-disable-line no-eval</pre>
+      <div class="rule">javascript.lang.security.audit.code-string-concat.code-string-concat · CWE-95: Improper Neutralization of Directives in Dynamically Evaluated Code (&#x27;Eval Injection&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/routes/userProfile.ts:61</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Cannot determine what &#x27;subs&#x27; is and it is used with a &#x27;&lt;script&gt;&#x27; tag. This could be susceptible to cross-site scripting (XSS). Ensure &#x27;subs&#x27; is not externally controlled, or sanitize this data.<pre>challengeUtils.solveIf(challenges.videoXssChallenge, () =&gt; { return utils.contains(subs, &#x27;&lt;/script&gt;&lt;script&gt;alert(`xss`)&lt;/script&gt;&#x27;) })</pre>
+      <div class="rule">javascript.lang.security.audit.unknown-value-with-script-tag.unknown-value-with-script-tag · CWE-79: Improper Neutralization of Input During Web Page Generation (&#x27;Cross-site Scripting&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/routes/videoHandler.ts:57</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Cannot determine what &#x27;subs&#x27; is and it is used with a &#x27;&lt;script&gt;&#x27; tag. This could be susceptible to cross-site scripting (XSS). Ensure &#x27;subs&#x27; is not externally controlled, or sanitize this data.<pre>compiledTemplate = compiledTemplate.replace(&#x27;&lt;script id=&quot;subtitle&quot;&gt;&lt;/script&gt;&#x27;, &#x27;&lt;script id=&quot;subtitle&quot; type=&quot;text/vtt&quot; data-label=&quot;English&quot; data-lang=&quot;en&quot;&gt;&#x27; + subs + &#x27;&lt;/script&gt;&#x27;)</pre>
+      <div class="rule">javascript.lang.security.audit.unknown-value-with-script-tag.unknown-value-with-script-tag · CWE-79: Improper Neutralization of Input During Web Page Generation (&#x27;Cross-site Scripting&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/routes/videoHandler.ts:71</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Directory listing/indexing is enabled, which may lead to disclosure of sensitive directories and files. It is recommended to disable directory listing unless it is a public resource. If you need directory listing, ensure that sensitive files are inaccessible when querying the resource.<pre>app.use(&#x27;/ftp&#x27;, serveIndexMiddleware, serveIndex(&#x27;ftp&#x27;, { icons: true })) // vuln-code-snippet vuln-line directoryListingChallenge</pre>
+      <div class="rule">javascript.express.security.audit.express-check-directory-listing.express-check-directory-listing · CWE-548: Exposure of Information Through Directory Listing · semgrep</div></td>
+  <td class="loc">/workspace/src/server.ts:269</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Directory listing/indexing is enabled, which may lead to disclosure of sensitive directories and files. It is recommended to disable directory listing unless it is a public resource. If you need directory listing, ensure that sensitive files are inaccessible when querying the resource.<pre>app.use(&#x27;/.well-known&#x27;, serveIndexMiddleware, serveIndex(&#x27;.well-known&#x27;, { icons: true, view: &#x27;details&#x27; }))</pre>
+      <div class="rule">javascript.express.security.audit.express-check-directory-listing.express-check-directory-listing · CWE-548: Exposure of Information Through Directory Listing · semgrep</div></td>
+  <td class="loc">/workspace/src/server.ts:273</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Directory listing/indexing is enabled, which may lead to disclosure of sensitive directories and files. It is recommended to disable directory listing unless it is a public resource. If you need directory listing, ensure that sensitive files are inaccessible when querying the resource.<pre>app.use(&#x27;/encryptionkeys&#x27;, serveIndexMiddleware, serveIndex(&#x27;encryptionkeys&#x27;, { icons: true, view: &#x27;details&#x27; }))</pre>
+      <div class="rule">javascript.express.security.audit.express-check-directory-listing.express-check-directory-listing · CWE-548: Exposure of Information Through Directory Listing · semgrep</div></td>
+  <td class="loc">/workspace/src/server.ts:277</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Directory listing/indexing is enabled, which may lead to disclosure of sensitive directories and files. It is recommended to disable directory listing unless it is a public resource. If you need directory listing, ensure that sensitive files are inaccessible when querying the resource.<pre>app.use(&#x27;/support/logs&#x27;, serveIndexMiddleware, serveIndex(&#x27;logs&#x27;, { icons: true, view: &#x27;details&#x27; })) // vuln-code-snippet vuln-line accessLogDisclosureChallenge</pre>
+      <div class="rule">javascript.express.security.audit.express-check-directory-listing.express-check-directory-listing · CWE-548: Exposure of Information Through Directory Listing · semgrep</div></td>
+  <td class="loc">/workspace/src/server.ts:281</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>A hard-coded credential was detected. It is not recommended to store credentials in source-code, as this risks secrets being leaked and used by either an internal or external malicious adversary. It is recommended to use environment variables to securely provide credentials or retrieve credentials from a secure vault or HSM (Hardware Security Module).<pre>}, &#x27;this_surly_isnt_the_right_key&#x27;)</pre>
+      <div class="rule">javascript.jsonwebtoken.security.jwt-hardcode.hardcoded-jwt-secret · CWE-798: Use of Hard-coded Credentials · semgrep</div></td>
+  <td class="loc">/workspace/src/test/api/2fa.test.ts:83</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>By not specifying a USER, a program in the container may run as &#x27;root&#x27;. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than &#x27;root&#x27;.<pre>CMD [&quot;sh&quot;, &quot;smoke-test.sh&quot;, &quot;http://app:3000&quot;]</pre>
+      <div class="rule">dockerfile.security.missing-user.missing-user · CWE-250: Execution with Unnecessary Privileges · semgrep</div></td>
+  <td class="loc">/workspace/src/test/smoke/Dockerfile:7</td>
+</tr><tr>
+  <td class="sev" style="border-color:var(--medium);color:var(--medium)">medium</td>
+  <td>Detected a unquoted template variable as an attribute. If unquoted, a malicious actor could inject custom JavaScript handlers. To fix this, add quotes around the template expression, like this: &quot;{{ expr }}&quot;.<pre>&lt;input type=&quot;email&quot; required placeholder={{userEmail}} name=&quot;email&quot; id=&quot;email&quot;&gt;</pre>
+      <div class="rule">generic.html-templates.security.unquoted-attribute-var.unquoted-attribute-var · CWE-79: Improper Neutralization of Input During Web Page Generation (&#x27;Cross-site Scripting&#x27;) · semgrep</div></td>
+  <td class="loc">/workspace/src/views/dataErasureForm.hbs:38</td>
+</tr></table>
+<footer>Generated by sast-batch-runner · Semgrep OSS + SonarQube Community Build</footer>
+</div></body></html>

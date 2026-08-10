@@ -59,7 +59,7 @@ COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Now the application code — the layer that changes most often, so it goes last.
-COPY scan_runner.py report_builder.py entrypoint.sh /app/
+COPY batch_script.py report_builder.py entrypoint.sh /app/
 RUN chmod +x /app/entrypoint.sh
 
 # Create an unprivileged user. Fargate does not give you root escape protection for free;

@@ -21,4 +21,4 @@ echo "=================================================="
 # `exec` REPLACES the shell process with Python rather than forking it.
 # This makes Python PID 1's direct child, so SIGTERM from ECS/Batch on task stop
 # reaches the scanner instead of dying in a shell that ignores it.
-exec python3 /app/scan_runner.py "$@"
+exec python3 /app/batch_script.py "$@"

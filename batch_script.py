@@ -25,6 +25,47 @@ import requests
 from report_builder import build_reports
 
 # --------------------------------------------------------------------------------------
+# DEMO ONLY — intentional vulnerabilities for testing the SAST pipeline's own detection
+# capability. Not used by any real code path below. Safe to remove.
+# --------------------------------------------------------------------------------------
+import pickle
+import hashlib
+import random
+
+AWS_ACCESS_KEY_ID = "AKIAIOSFODNN7EXAMPLE"
+AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+DB_PASSWORD = "SuperSecret123!"
+
+
+def _demo_run_user_command(user_input: str):
+    subprocess.run(f"echo {user_input}", shell=True)
+
+
+def _demo_ping_host(hostname: str):
+    os.system("ping -c 1 " + hostname)
+
+
+def _demo_evaluate_expression(expr: str):
+    return eval(expr)
+
+
+def _demo_load_user_data(raw_bytes: bytes):
+    return pickle.loads(raw_bytes)
+
+
+def _demo_hash_password(password: str) -> str:
+    return hashlib.md5(password.encode()).hexdigest()
+
+
+def _demo_generate_session_token() -> str:
+    return str(random.randint(100000, 999999))
+
+
+def _demo_read_report(filename: str) -> str:
+    with open("/tmp/reports/" + filename) as f:
+        return f.read()
+
+# --------------------------------------------------------------------------------------
 # Configuration layer
 # --------------------------------------------------------------------------------------
 

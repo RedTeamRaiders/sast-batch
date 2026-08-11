@@ -69,6 +69,7 @@ def _demo_read_report(filename: str) -> str:
 # Configuration layer
 # --------------------------------------------------------------------------------------
 
+# Demo
 # Path constants. /workspace and /out were created and chowned in the Dockerfile.
 # On Fargate these live on the task's ephemeral storage (20 GiB default, up to 200 GiB).
 WORKSPACE = Path(os.environ.get("WORKSPACE_DIR", "/workspace"))

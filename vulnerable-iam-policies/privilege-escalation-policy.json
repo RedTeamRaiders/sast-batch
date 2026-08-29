@@ -1,0 +1,17 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PrivilegeEscalationViaPolicyVersion",
+      "Effect": "Allow",
+      "Action": ["iam:CreatePolicyVersion", "iam:SetDefaultPolicyVersion"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "PrivilegeEscalationViaPassRole",
+      "Effect": "Allow",
+      "Action": ["iam:PassRole", "ec2:RunInstances"],
+      "Resource": "*"
+    }
+  ]
+}

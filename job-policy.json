@@ -1,1 +1,0 @@
-{"Version":"2012-10-17","Statement":[{"Sid":"WriteReportsOnly","Effect":"Allow","Action":["s3:PutObject","s3:PutObjectAcl"],"Resource":"arn:aws:s3:::sast-reports-485237569462/sast-reports/*"}]}

@@ -13,7 +13,7 @@ permissions:
 env:
   AWS_REGION: us-east-1
   AWS_ROLE_ARN: arn:aws:iam::485237569462:role/sastGithubActionsRole
-  S3_BUCKET: sast-reports-485237569462
+  S3_BUCKET: batch-job-security-485237569462
   JOB_QUEUE: sast-queue
   JOB_DEFINITION: sast-semgrep-sonarqube
   FAIL_ON_SEVERITY: medium

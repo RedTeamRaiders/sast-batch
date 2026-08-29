@@ -18,10 +18,14 @@ dependency-check.sh --scan /workspace/src --format ALL --project "${SLUG}" \
 SCAN_EXIT="${SCAN_EXIT:-0}"
 echo "[$(date +%H:%M:%S)] Dependency-Check finished, exit code ${SCAN_EXIT}"
 
+shopt -s nullglob
 PREFIX="dependency-reports/${SLUG}/${JOB_ID}"
 for f in /out/*; do
   aws s3 cp "$f" "s3://${S3_BUCKET}/${PREFIX}/$(basename "$f")"
 done
+if [ -z "$(ls -A /out 2>/dev/null)" ]; then
+  echo "[$(date +%H:%M:%S)] No report files were produced (scan likely failed before writing output)"
+fi
 echo "[$(date +%H:%M:%S)] Uploaded reports to s3://${S3_BUCKET}/${PREFIX}/"
 
 exit "$SCAN_EXIT"

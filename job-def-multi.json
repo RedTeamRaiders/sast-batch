@@ -47,7 +47,7 @@
               { "name": "SONAR_HOST_URL", "value": "http://localhost:9000" },
               { "name": "SONAR_ADMIN_PASSWORD", "value": "admin" },
               { "name": "SONAR_STARTUP_TIMEOUT", "value": "600" },
-              { "name": "S3_BUCKET", "value": "sast-reports-485237569462" },
+              { "name": "S3_BUCKET", "value": "batch-job-security-485237569462" },
               { "name": "SEMGREP_CONFIGS", "value": "p/security-audit,p/owasp-top-ten,p/secrets" },
               { "name": "FAIL_ON_SEVERITY", "value": "none" }
             ],
